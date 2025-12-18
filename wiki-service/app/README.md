@@ -38,29 +38,45 @@ k3d LoadBalancer (Traefik)
 
 ```
 .
-├── Dockerfile                 # Cluster bootstrap container
-├── run_cluster.sh              # Creates k3d cluster with LB
-├── wiki-chart                  # Helm chart
+├── Dockerfile # Cluster bootstrap container
+├── README.md
+├── run_cluster.sh # Creates k3d cluster with 
+├── wiki-chart # Helm chart
 │   ├── Chart.yaml
-│   ├── values.yaml
-│   └── templates
-│       ├── deployment.yaml     # FastAPI
-│       ├── service.yaml        # FastAPI service
-│       ├── ingress.yaml        # Traefik ingress
-│       ├── strip-grafana-middleware.yaml
-│       ├── postgres-statefulset.yaml
-│       ├── prometheus-deployment.yaml
-│       ├── prometheus-service.yaml
-│       ├── grafana-deployment.yaml
-│       └── grafana-service.yaml
+│   ├── templates
+│   │   ├── deployment.yaml # FastAPI
+│   │   ├── grafana-dashboard-configmap.yaml
+│   │   ├── grafana-datasource-configmap.yaml
+│   │   ├── grafana-deployment.yaml
+│   │   ├── grafana-service.yaml
+│   │   ├── ingress.yaml # Traefik ingress
+│   │   ├── postgres-service.yaml
+│   │   ├── postgres-statefulset.yaml
+│   │   ├── prometheus-deployment.yaml
+│   │   ├── prometheus-service.yaml
+│   │   └── service.yaml # FastAPI service
+│   └── values.yaml
 └── wiki-service
     ├── app
-    │   ├── main.py
     │   ├── database.py
+    │   ├── __init__.py
+    │   ├── main.py
+    │   ├── metrics.py
     │   ├── models.py
+    │   ├── __pycache__
+    │   │   ├── database.cpython-313.pyc
+    │   │   ├── __init__.cpython-313.pyc
+    │   │   ├── main.cpython-313.pyc
+    │   │   ├── metrics.cpython-313.pyc
+    │   │   ├── models.cpython-313.pyc
+    │   │   └── schemas.cpython-313.pyc
+    │   ├── pyproject.toml
+    │   ├── README.md
     │   ├── schemas.py
-    │   └── metrics.py
-    └── Dockerfile               # FastAPI image
+    │   ├── test_api.sh
+    │   └── uv.lock
+    ├── Dockerfile  # FastAPI image
+    └── pyproject.toml
 ```
 
 ## 🚀 Running the Project (Local)
