@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+  namespace: wiki
+spec:
+  replicas: {{ .Values.fastapi.replicas }}
+  selector:
+    matchLabels: 
+      app: fastapi
+  template:
+    metadata:
+      labels: 
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: {{ .Values.fastapi.image_name }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATABASE_URL
+          value: "{{ .Values.fastapi.env.DATABASE_URL }}"
+        ports:
+        - containerPort: 9000
+        resources:
+{{- toYaml .Values.fastapi.resources | nindent 10 }}
+        readinessProbe:
+          httpGet:
+            path: /docs
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 20

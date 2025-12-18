@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: wiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: grafana
+  template:
+    metadata:
+      labels: 
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:10.4.3
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: {{ .Values.grafana.adminUser | quote }}
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: {{ .Values.grafana.adminPassword | quote }}
+        - name: GF_SERVER_ROOT_URL
+          value: "%(protocol)s://%(domain)s/grafana/"
+        - name: GF_SERVER_SERVE_FROM_SUB_PATH
+          value: "true"
+        resources:
+{{- toYaml .Values.grafana.resources | nindent 10 }}
+        volumeMounts:
+        - name: datasources
+          mountPath: /etc/grafana/provisioning/datasources
+        - name: dashboards
+          mountPath: /etc/grafana/provisioning/dashboards
+      volumes:
+      - name: datasources
+        configMap:
+          name: grafana-datasource
+      - name: dashboards
+        configMap:
+          name: grafana-dashboard-config

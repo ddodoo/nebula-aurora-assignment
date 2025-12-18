@@ -1,0 +1,48 @@
+fastapi:
+  image_name: "wiki-service:local"
+  replicas: 1
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+  env:
+    DATABASE_URL: "postgresql+asyncpg://wiki_user:wiki_pass@postgres:5432/wiki_db"
+
+postgres:
+  user: wiki_user
+  password: wiki_pass
+  db: wiki_db
+  storage: 2Gi
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+prometheus:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "300m"
+      memory: "256Mi"
+
+grafana:
+  adminUser: admin
+  adminPassword: admin
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "300m"
+      memory: "256Mi"
+
+ingress:
+  host: ""  
