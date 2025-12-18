@@ -40,7 +40,7 @@ k3d LoadBalancer (Traefik)
 .
 ├── Dockerfile # Cluster bootstrap container
 ├── README.md
-├── run_cluster.sh # Creates k3d cluster with 
+├── run_cluster.sh # Creates k3d cluster with LB
 ├── wiki-chart # Helm chart
 │   ├── Chart.yaml
 │   ├── templates
